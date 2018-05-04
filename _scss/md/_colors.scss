@@ -1,0 +1,132 @@
+$lightFgSelectors: #{".light-fg, .light-fg.text-auto"};
+$darkFgSelectors: #{".dark-fg, .dark-fg.text-auto"};
+
+// a map-set function (not included with Sass)
+@function map-set($map, $key, $value) {
+    $new: ($key: $value);
+    @return map-merge($map, $new);
+}
+
+@function non-destructive-map-merge($parent-map, $child-map) {
+    $result: $parent-map;
+    @each $key, $value in $child-map {
+        @if (not map-has-key($result, $key)) or (type-of(map-get($result, $key)) != type-of($value)) or (not (type-of(map-get($result, $key)) == map and type-of($value) == map)) {
+            $result: map-merge($result, ($key: $value));
+        } @else {
+            $result: map-merge($result, ($key: non-destructive-map-merge(map-get($result, $key), $value)));
+        }
+    }
+    @return $result;
+}
+
+$bootstrapColors: (
+        'primary': map-get($materialColorsMap, $primary),
+        'secondary' : map-get($materialColorsMap, $secondary),
+        'success' : map-get($materialColorsMap, $success),
+        'info' : map-get($materialColorsMap, $info),
+        'warning' : map-get($materialColorsMap, $warning),
+        'danger' : map-get($materialColorsMap, $danger),
+        'dark' : map-get($materialColorsMap, $dark),
+        'light' : map-get($materialColorsMap, $light)
+);
+
+// Material colors with all available hue values
+@each $colorName, $colorMap in map-merge($bootstrapColors, $materialColorsMap) {
+    //@include colorVariant($colorName, $colorMap);
+    @each $hue, $hexValue in map-get($colorMap, 'hues') {
+
+        $selector: ".bg-#{$colorName}-#{$hue}.text-auto";
+
+        @if ($hue == '500') {
+            $selector: "#{$selector}, .bg-#{$colorName}.text-auto";
+        }
+
+        @if (mdc-theme-light-or-dark($hexValue) == 'light') {
+            $lightFgSelectors: append($lightFgSelectors, #{$selector}, 'comma');
+        } @else {
+            $darkFgSelectors: append($darkFgSelectors, #{$selector}, 'comma');
+        }
+
+        .bg-#{$colorName}-#{$hue} {
+            background-color: $hexValue !important;
+            @include ripple-color($hexValue);
+        }
+
+        .bg-#{$colorName}-#{$hue}.text-auto {
+            background-color: $hexValue !important;
+            //@include autoText($hexValue);
+            //@include autoText($hexValue);
+            //color: map-get($contrastsMap, map-get(map-get($colorMap, 'contrasts'), $hue));
+        }
+
+        .text-#{$colorName}-#{$hue} {
+            color: $hexValue !important;
+        }
+
+        .border-#{$colorName}-#{$hue} {
+            border-color: $hexValue !important;
+        }
+
+        .border-top-#{$colorName}-#{$hue} {
+            border-top-color: $hexValue !important;
+        }
+
+        .border-right-#{$colorName}-#{$hue} {
+            border-right-color: $hexValue !important;
+        }
+
+        .border-bottom-#{$colorName}-#{$hue} {
+            border-bottom-color: $hexValue !important;
+        }
+
+        .border-left-#{$colorName}-#{$hue} {
+            border-left-color: $hexValue !important;
+        }
+
+        @if ($hue == '500') {
+
+            .bg-#{$colorName}.text-auto {
+                background-color: $hexValue !important;
+                //@include autoText($hexValue);
+                //color: map-get($contrastsMap, map-get(map-get($colorMap, 'contrasts'), $hue));
+            }
+
+            .bg-#{$colorName} {
+                background-color: $hexValue !important;
+                @include ripple-color($hexValue);
+            }
+
+            .text-#{$colorName} {
+                color: $hexValue !important;
+            }
+
+            .border-#{$colorName} {
+                border-color: $hexValue !important;
+            }
+
+            .border-top-#{$colorName} {
+                border-top-color: $hexValue !important;
+            }
+
+            .border-right-#{$colorName} {
+                border-right-color: $hexValue !important;
+            }
+
+            .border-bottom-#{$colorName} {
+                border-bottom-color: $hexValue !important;
+            }
+
+            .border-left-#{$colorName} {
+                border-left-color: $hexValue !important;
+            }
+        }
+    }
+}
+
+#{$lightFgSelectors} {
+    @include fgStyles('light');
+}
+
+#{$darkFgSelectors} {
+    @include fgStyles('dark');
+}

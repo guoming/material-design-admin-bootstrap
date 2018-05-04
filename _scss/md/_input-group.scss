@@ -1,0 +1,66 @@
+//
+// Base styles
+//
+
+.input-group {
+    //align-items: end;
+
+    .form-group {
+        margin-bottom: 0;
+        .form-control {
+            width: 100%
+        }
+    }
+
+    .input-group-addon {
+        margin: 0;
+        padding: 0;
+
+        .form-check-input,
+        input[type=radio],
+        input[type=checkbox] {
+            top: auto;
+            bottom: 0;
+            left: 10px;
+            width: 24px;
+            height: 24px;
+
+            ~ .checkbox-icon, ~ .custom-control-indicator,
+            ~ .radio-icon, ~ .custom-control-indicator {
+                position: absolute;
+                top: auto;
+                bottom: -8px;
+            }
+        }
+    }
+
+    .input-group-btn {
+        margin: 0 1.6rem;
+        &:first-child {
+            margin-left: 0;
+        }
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+
+    .input-group-addon {
+        padding-left: 1.2rem;
+        padding-right: 1.2rem;
+        &:first-child {
+            padding-left: 0;
+        }
+        &:last-child {
+            padding-right: 0;
+        }
+    }
+
+    .input-group-append{
+        margin-left: 1.6rem;
+    }
+
+    .input-group-prepend{
+        margin-right: 1.6rem;
+    }
+
+}

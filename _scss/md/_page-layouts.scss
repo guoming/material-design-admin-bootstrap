@@ -1,0 +1,538 @@
+/*----------------------------------------------------------------*/
+/*  Page Layouts
+/*----------------------------------------------------------------*/
+
+// Page Layouts
+$header-height: 20rem;
+$card-toolbar-height: 6.4rem;
+$card-header-height: $header-height - $card-toolbar-height;
+
+$header-height-xs: 16rem;
+$card-header-height-sm: $header-height-xs - $card-toolbar-height;
+
+.page-layout {
+    position: relative;
+    overflow: hidden;
+    flex: 1;
+
+    .top-bg {
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        right: 0;
+        left: 0;
+        height: $header-height;
+        background-image: url('/assets/images/backgrounds/header-bg.png');
+        background-size: cover;
+    }
+
+    // Global header styles
+    > .page-header {
+        height: $header-height;
+        min-height: $header-height;
+        max-height: $header-height;
+        background-image: url('/assets/images/backgrounds/header-bg.png');
+        background-size: cover;
+
+        .breadcrumb {
+            margin-bottom: 16px;
+            font-weight: 500;
+            color: rgba(0, 0, 0, 0.54);
+        }
+
+        .title {
+            font-size: 34px;
+        }
+    }
+
+    // Carded layout
+    &.carded {
+        min-height: 100%;
+        height: 100%;
+
+        // Fullwidth
+        &.full-width {
+            display: flex;
+            flex-direction: column;
+
+            > .page-content-wrapper {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                z-index: 2;
+                padding: 0 3.2rem;
+                height: 100%;
+
+                .page-header {
+                    height: $card-header-height;
+                    min-height: $card-header-height;
+                    max-height: $card-header-height;
+                }
+
+                .page-content-card {
+                    display: flex;
+                    flex-direction: column;
+                    background: #FFFFFF;
+                    @include mdc-elevation(7);
+                    overflow: hidden;
+
+                    .toolbar {
+                        height: $card-toolbar-height;
+                        min-height: $card-toolbar-height;
+                        max-height: $card-toolbar-height;
+                        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+                    }
+
+                    .page-content {
+                        flex: 1 1 auto;
+                        display: flex;
+                        overflow-y: auto;
+                        overflow-x: hidden;
+                        background: #FFFFFF;
+                    }
+                }
+            }
+        }
+
+        &.left-sidebar,
+        &.right-sidebar {
+            display: flex;
+            flex-direction: row;
+
+            // sidebar
+            > .page-sidebar {
+                display: flex;
+                flex-direction: column;
+                width: 220px;
+                min-width: 220px;
+                max-width: 220px;
+                z-index: 2;
+                background: transparent;
+                box-shadow: none;
+
+                .header {
+                    height: $header-height;
+                    min-height: $header-height;
+                    max-height: $header-height;
+                }
+
+                .content {
+                    background: transparent;
+                    overflow-y: auto;
+                    overflow-x: hidden;
+                }
+
+                &.fuse-bar {
+                    width: 240px;
+                    min-width: 240px;
+                    max-width: 240px;
+                    background: #FFFFFF;
+                    @include mdc-elevation(7);
+                    z-index: 1021;
+                    overflow-y: auto;
+                    overflow-x: hidden;
+
+                    .header {
+                        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+                    }
+
+                    .content {
+                        flex: 1 0 auto;
+                        overflow: hidden;
+                    }
+                }
+            }
+
+            .page-content-wrapper {
+                display: flex;
+                flex-direction: column;
+                position: relative;
+                z-index: 2;
+                padding: 0 3.2rem;
+                flex: 1 1 auto;
+
+                @include ie-only() {
+                    overflow: hidden !important;
+                }
+
+                .page-header {
+                    height: $card-header-height;
+                    min-height: $card-header-height;
+                    max-height: $card-header-height;
+                }
+
+                .page-content-card {
+                    display: flex;
+                    flex-direction: column;
+                    background: #FFFFFF;
+                    @include mdc-elevation(7);
+                    overflow: hidden;
+
+                    .toolbar {
+                        height: $card-toolbar-height;
+                        min-height: $card-toolbar-height;
+                        max-height: $card-toolbar-height;
+                        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+
+                        .sidebar-toggle {
+                            margin: 0 8px 0 0 !important;
+                            padding: 0 !important;
+                            border-radius: 0;
+                        }
+                    }
+
+                    .page-content {
+                        flex: 1 1 auto;
+                        display: flex;
+                        overflow-y: auto;
+                        overflow-x: hidden;
+                        background: #FFFFFF;
+                    }
+                }
+            }
+        }
+
+        // Left sidebar
+        &.left-sidebar {
+            @include media-breakpoint-up(lg) {
+                > .page-sidebar {
+                    &:not(.fuse-bar) + .page-content-wrapper {
+                        padding-left: 0;
+                    }
+                }
+            }
+
+            // Single scroll
+            &.single-scroll {
+                height: auto;
+
+                > .page-content-wrapper {
+
+                    .page-content-card {
+
+                        .page-content {
+                            overflow: hidden;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Right sidebar
+        &.right-sidebar {
+
+            @include media-breakpoint-up(lg) {
+                > .page-sidebar {
+                    &:not(.fuse-bar) {
+                        padding-left: 0 !important;
+                    }
+                }
+            }
+
+            // Single scroll
+            &.single-scroll {
+                height: auto;
+
+                > .page-content-wrapper {
+
+                    .page-content-card {
+
+                        .page-content {
+                            overflow: hidden;
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+
+    // Simple layout
+    &.simple {
+
+        // Fullwidth
+        &.full-width,
+        &.left-sidebar-inner,
+        &.right-sidebar-inner,
+        &.left-sidebar-floating,
+        &.right-sidebar-floating,
+        &.tabbed,
+        &.blank {
+            min-height: 100%;
+            flex: 1 0 auto;
+        }
+
+        > .page-content-wrapper {
+            flex: 1;
+        }
+
+        &.left-sidebar-inner,
+        &.right-sidebar-inner,
+        &.left-sidebar-floating,
+        &.right-sidebar-floating {
+
+            > .page-content-wrapper {
+                display: flex;
+                flex-direction: row;
+
+                > .page-content {
+                    flex: 1 1 auto;
+                }
+            }
+        }
+
+        .page-sidebar {
+            width: 220px;
+            min-width: 220px;
+            max-width: 220px;
+            z-index: 2;
+            box-shadow: none;
+            background: transparent;
+            overflow-y: auto;
+            overflow-x: hidden;
+
+            &.fuse-bar {
+                width: 240px;
+                min-width: 240px;
+                max-width: 240px;
+                z-index: 1021;
+                background: white;
+                @include mdc-elevation(7);
+            }
+        }
+
+        &.left-sidebar,
+        &.right-sidebar {
+            display: flex;
+            flex-direction: row;
+            min-height: 100%;
+            height: 100%;
+
+            > .page-content-wrapper {
+                position: relative;
+                overflow-y: auto;
+                overflow-x: hidden;
+                z-index: 3;
+                @include mdc-elevation(7);
+
+                .page-header {
+                    height: $header-height;
+                    min-height: $header-height;
+                    max-height: $header-height;
+                    background-image: url('/assets/images/backgrounds/header-bg.png');
+                    background-size: cover;
+                }
+
+                .page-content {
+                    background: #FFFFFF;
+                }
+            }
+        }
+
+        &.left-sidebar-floating,
+        &.right-sidebar-floating {
+            flex-direction: column;
+
+            .page-content-wrapper {
+
+                .page-sidebar {
+                    box-sizing: content-box;
+                    position: relative;
+
+                    .page-sidebar-card {
+                        @include mdc-elevation(1);
+                        background-color: #FFFFFF;
+                    }
+                }
+
+                @include media-breakpoint-down(md) {
+                    .page-sidebar {
+                        padding: 0 !important;
+                        .page-sidebar-card {
+                            box-shadow: none;
+                        }
+                    }
+                }
+            }
+        }
+
+        @include media-breakpoint-up(lg) {
+            &.left-sidebar-floating {
+                .page-content-wrapper {
+                    > .page-sidebar {
+                        &:not(.fuse-bar) + .page-content {
+                            padding-left: 0 !important;
+                        }
+                    }
+                }
+            }
+
+            &.right-sidebar-floating {
+                .page-content-wrapper {
+                    > .page-sidebar {
+                        &:not(.fuse-bar) {
+                            padding-left: 2px !important;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Tabbed
+        &.tabbed {
+            .page-content {
+                padding: 0;
+
+                > .nav-tabs {
+                    padding: 0 2.4rem;
+                    background-color: #FFFFFF;
+                    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 2px 1px -1px rgba(0, 0, 0, .12);
+                }
+
+                > .tab-content {
+                    padding: 2.4rem;
+                }
+            }
+        }
+    }
+}
+
+// Single scroll modifications
+.single-scroll {
+
+    // Carded
+    &.carded {
+
+        .page-content-wrapper {
+            flex: 1 1 auto;
+            max-width: 100%;
+            overflow: auto;
+
+            .page-content-card {
+                flex: 1 0 auto;
+            }
+        }
+    }
+
+    // Simple layout
+    &.simple {
+
+        &.left-sidebar,
+        &.right-sidebar {
+            flex: 1 1 auto;
+            height: 100%;
+
+            .page-content-wrapper {
+                flex: 1 1 auto;
+                max-width: 100%;
+                overflow: auto;
+            }
+
+        }
+    }
+}
+
+@include media-breakpoint-up(lg) {
+    .single-scroll {
+
+        // Carded
+        &.carded {
+
+            // Fullwidth
+            &.full-width {
+                flex: 1 0 auto;
+                height: auto;
+            }
+
+            // Left sidebar
+            &.left-sidebar,
+            &.right-sidebar {
+                flex: 1 0 auto;
+                height: auto;
+
+                > .page-content-wrapper {
+                    flex: 1 1 auto;
+                    overflow: unset;
+                }
+            }
+        }
+
+        // Simple layout
+        &.simple {
+
+            &.left-sidebar,
+            &.right-sidebar {
+                flex: 1 0 auto;
+                height: auto;
+            }
+        }
+    }
+}
+
+// RESPONSIVE
+@include media-breakpoint-down(xs) {
+    .page-layout {
+
+        .top-bg {
+            height: $header-height-xs;
+        }
+
+        &.carded {
+
+            &.right-sidebar,
+            &.left-sidebar,
+            &.full-width {
+
+                > .page-content-wrapper {
+                    padding: 0 1.6rem;
+
+                    .page-header {
+                        height: $card-header-height-sm;
+                        min-height: $card-header-height-sm;
+                        max-height: $card-header-height-sm;
+                    }
+                }
+            }
+        }
+
+        &.simple {
+
+            &.full-width,
+            &.inner-sidebar {
+
+                > .page-header {
+                    height: $header-height-xs;
+                    min-height: $header-height-xs;
+                    max-height: $header-height-xs;
+                }
+            }
+
+            &.right-sidebar,
+            &.left-sidebar {
+
+                > .page-content-wrapper {
+
+                    .page-header {
+                        height: $header-height-xs;
+                        min-height: $header-height-xs;
+                        max-height: $header-height-xs;
+                    }
+                }
+            }
+        }
+
+        // Turn simple layouts into single-scroll
+        &.simple {
+
+            &.left-sidebar,
+            &.right-sidebar {
+
+                > .page-content-wrapper {
+                    overflow-y: auto;
+                    overflow-x: hidden;
+                }
+            }
+        }
+    }
+
+}

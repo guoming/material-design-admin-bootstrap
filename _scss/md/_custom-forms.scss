@@ -1,0 +1,33 @@
+.custom-control-indicator {
+    pointer-events: initial;
+}
+
+.custom-select {
+    box-shadow: $input-box-shadow;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: auto;
+    border: none;
+    border-radius: 0;
+}
+
+.custom-checkbox {
+
+    .custom-control-input:checked ~ .custom-control-indicator {
+        background-image: none;
+    }
+
+    .custom-control-input:indeterminate ~ .custom-control-indicator {
+        background-color: transparent;
+        background-image: none;
+        box-shadow: none;
+        &:before {
+            content: "\ed8e";
+        }
+    }
+}
+
+.custom-file-label {
+    padding: 0;
+}

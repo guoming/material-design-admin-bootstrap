@@ -1,0 +1,8 @@
+.custom-scrollbar {
+    position: relative;
+}
+
+.ps__scrollbar-x-rail,
+.ps__scrollbar-y-rail {
+    z-index: 99;
+}
